@@ -1,5 +1,8 @@
 package com.baidu.ueditor.define;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
 /**
  * 处理状态接口
  * @author hancong03@baidu.com
@@ -7,12 +10,29 @@ package com.baidu.ueditor.define;
  */
 public interface State {
 	
-	public boolean isSuccess ();
+	 boolean isSuccess ();
 	
-	public void putInfo( String name, String val );
+	 void putInfo( String name, String val );
 	
-	public void putInfo ( String name, long val );
+	 void putInfo ( String name, long val );
 	
-	public String toJSONString ();
+	 String toJSONString ();
 
+	default <T> T getField(String name){
+		try {
+		Class stateClass = this.getClass();;
+			Field field= stateClass.getDeclaredField(name);
+			if(field!=null){
+				return (T) field.get(this);
+			}
+		}catch (NoSuchFieldException|IllegalAccessException e){
+
+		}
+		return (T)null;
+	}
+
+	default Object getInfo(String name){
+		Map<String,Object> infoMap=this.getField("infoMap");
+		return infoMap.get(name);
+	}
 }
