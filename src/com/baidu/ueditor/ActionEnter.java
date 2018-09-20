@@ -47,15 +47,31 @@ public class ActionEnter {
 				return new BaseState( false, AppInfo.ILLEGAL ).toJSONString();
 			}
 			
-			return callbackName+"("+this.invoke()+");";
+			return callbackName+"("+this.invoke(null)+");";
 			
 		} else {
-			return this.invoke();
+			return this.invoke(null);
 		}
 
 	}
-	
-	public String invoke() {
+	public String exec (ExecCall execCall) {
+
+		String callbackName = this.request.getParameter("callback");
+
+		if ( callbackName != null ) {
+
+			if ( !validCallbackName( callbackName ) ) {
+				return new BaseState( false, AppInfo.ILLEGAL ).toJSONString();
+			}
+
+			return callbackName+"("+this.invoke(execCall)+");";
+
+		} else {
+			return this.invoke(execCall);
+		}
+
+	}
+	public String invoke(ExecCall execCall) {
 
 		if ( actionType == null || !ActionMap.mapping.containsKey( actionType ) ) {
 			return new BaseState( false, AppInfo.INVALID_ACTION ).toJSONString();
@@ -98,11 +114,13 @@ public class ActionEnter {
 				break;
 
 		}
-
+		if(execCall!=null){
+			execCall.work(state);
+		}
 		return state.toJSONString();
 
 	}
-	
+
 	public int getStartIndex () {
 		
 		String start = this.request.getParameter( "start" );
