@@ -33,6 +33,6 @@ public interface State {
 
 	default Object getInfo(String name){
 		Map<String,Object> infoMap=this.getField("infoMap");
-		return infoMap.get(name);
+		return infoMap!=null? infoMap.get(name):null;
 	}
 }
