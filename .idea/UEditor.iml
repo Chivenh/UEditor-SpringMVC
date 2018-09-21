@@ -25,5 +25,6 @@
     <orderEntry type="library" name="spring-web-4.3.7.RELEASE" level="project" />
     <orderEntry type="library" name="spring-beans-4.3.7.RELEASE" level="project" />
     <orderEntry type="library" name="spring-core-4.3.7.RELEASE" level="project" />
+    <orderEntry type="library" name="json" level="project" />
   </component>
 </module>

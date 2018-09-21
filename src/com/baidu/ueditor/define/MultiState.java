@@ -20,7 +20,7 @@ public class MultiState implements State {
 	private String info = null;
 	private Map<String, Long> intMap = new HashMap<String, Long>();
 	private Map<String, String> infoMap = new HashMap<String, String>();
-	private List<String> stateList = new ArrayList<String>();
+	private List<State> stateList = new ArrayList<State>();
 	
 	public MultiState ( boolean state ) {
 		this.state = state;
@@ -42,7 +42,7 @@ public class MultiState implements State {
 	}
 	
 	public void addState ( State state ) {
-		stateList.add( state.toJSONString() );
+		stateList.add( state);
 	}
 
 	/**
@@ -84,9 +84,9 @@ public class MultiState implements State {
 		}
 		
 		builder.append( ", list: [" );
-		
-		
-		iterator = this.stateList.iterator();
+
+
+		Iterator<State> stateIterator = this.stateList.iterator();
 		
 		while ( iterator.hasNext() ) {
 			
