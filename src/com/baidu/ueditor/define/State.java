@@ -23,6 +23,8 @@ public interface State {
 		Class stateClass = this.getClass();;
 			Field field= stateClass.getDeclaredField(name);
 			if(field!=null){
+				//设置属性访问级别,获取private属性值.
+				field.setAccessible(true);
 				return (T) field.get(this);
 			}
 		}catch (NoSuchFieldException|IllegalAccessException e){
